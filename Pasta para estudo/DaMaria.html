@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: calc(90% - 10px);
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            margin-top: 5px;
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #mensagemCadastro {
+            text-align: center;
+            color: green;
+        }
+
+        button#buscarEndereco {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button#buscarEndereco:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Cadastro</h1>
+
+    <form id="cadastroForm">
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="sobrenome">Sobrenome:</label>
+            <input type="text" id="sobrenome" name="sobrenome" required>
+        </div>
+
+        <div>
+            <label for="dataNascimento">Data de Nascimento:</label>
+            <input type="date" id="dataNascimento" name="dataNascimento" required>
+
+            <label for="idade">Idade:</label>
+            <input type="text" id="idade" name="idade" readonly>
+        </div>
+
+        <div>
+            <label for="cpf">CPF:</label>
+            <input type="text" id="#cpf" name="cpf" required>
+
+            <label for="nomeMae">Nome da Mãe:</label>
+            <input type="text" id="nomeMae" name="nomeMae" required>
+        </div>
+
+        <div>
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" required>
+            <td><button type="button" id="buscarEndereco">Buscar</button></td>
+
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco">
+
+            <label for="numero">N°:</label>
+            <input type="text" id="numero" name="numero">
+        </div>
+
+        <div>
+            <label for="nacionalidade">Nacionalidade:</label>
+            <input type="text" id="nacionalidade" name="nacionalidade">
+
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade">
+
+            <label for="estado">Estado:</label>
+            <input type="text" id="estado" name="estado">
+
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" name="bairro">
+        </div>
+
+        <div>
+            <label for="sintomas">Sintomas:</label>
+            <textarea id="sintomas" name="sintomas"></textarea>
+        </div>
+
+        <div>
+            <label for="exames">Adicionar PDFs de Exames:</label>
+            <input type="file" id="exames" name="exames" accept=".pdf">
+        </div>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <p id="mensagemCadastro" display: none>Cadastro realizado com sucesso</p>
+
+    <script>
+        document.getElementById('dataNascimento').addEventListener('change', function () {
+            var dataNascimento = new Date(this.value);
+            var hoje = new Date();
+            var idade = hoje.getFullYear() - dataNascimento.getFullYear();
+            var mes = hoje.getMonth() - dataNascimento.getMonth();
+            if (mes < 0 || (mes === 0 && hoje.getDate() < dataNascimento.getDate())) {
+                idade--;
+            }
+            document.getElementById('idade').value = idade;
+        });
+
+        document.getElementById('cadastroForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            document.getElementById('mensagemCadastro').style.display = 'block';
+        });
+    </script>
+
+    <script>
+        document.getElementById('buscarEndereco').addEventListener('click', function () {
+            var cep = document.getElementById('cep').value;
+            if (cep.trim() !== '') {
+                fetch('https://viacep.com.br/ws/' + cep + '/json/')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('endereco').value = data.logradouro + ', ' + data.bairro + ', ' + data.localidade + ' - ' + data.uf;
+                        } else {
+                            alert('CEP não encontrado');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar CEP:', error);
+                        alert('Erro ao buscar CEP. Por favor, tente novamente mais tarde.');
+                    });
+            } else {
+                alert('Por favor, insira um CEP válido');
+            }
+        });
+    </script>
+
+</body>
+</html>

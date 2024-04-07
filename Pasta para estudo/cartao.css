@@ -1,0 +1,81 @@
+body{
+    font-family: fantasy ;
+    margin: 0px;
+    padding: 0;
+    border: 1px solid;
+    
+}
+
+.div_pai{
+width: 800px;
+height: 500px;
+border: 1px solid;
+text-align: center;
+
+position: absolute;
+left: 30%;
+top: 20%;
+background-image: url(bg1.png);
+}
+
+.firstline{
+
+text-align: center;
+top: 90px;
+left: 55px;
+display: block ;
+position: absolute;
+height: 200px;
+width: 650px;
+font-size: larger;
+
+
+
+}
+
+.firstline input{
+    position: absolute;
+    border-radius: 10px;
+    left: 100px;
+    height: 15%;
+    width: 80%;
+    
+}
+
+#nome{
+    top:0%;
+
+}
+#cpf{
+    top: 20%;
+}
+#matricula{
+top :40%;
+}
+#curso{
+    top:60%;
+}
+
+.firstline label{
+    position: absolute;
+    left: 10px;
+    line-height: 200%;
+    
+}
+.firstline input:hover{
+    cursor: pointer;
+    background: rgb(251,218,26);
+background: linear-gradient(143deg, rgba(251,218,26,0.8337710084033614) 25%, rgba(6,154,146,1) 75%);
+
+}
+
+#foto{
+    border: 1px solid;
+    border-radius: 10px;
+    background-image: url(FotoDoEstudante.png);
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    left: 15%;
+    bottom: 5%;
+}

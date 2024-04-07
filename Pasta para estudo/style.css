@@ -1,0 +1,22 @@
+form {
+    background-color: blanchedalmond;
+    width: 80%;
+    height: 80%;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    padding: 20px;
+    border-radius: 10px;
+    display: flex; /* Altera o layout para flexbox */
+    flex-direction: column; /* Alinha os itens verticalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    align-items: center; /* Centraliza os itens horizontalmente */
+}
+
+input {
+    width: 80%; /* Define a largura dos inputs */
+    padding: 10px; /* Define o preenchimento interno dos inputs */
+    margin: 5px 0; /* Define a margem entre os inputs */
+    text-align: center; /* Centraliza o texto dentro dos inputs */
+    border-radius: 10px; /* Adiciona cantos arredondados aos inputs */
+    border: 1px solid #ccc; /* Adiciona uma borda aos inputs */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+}
